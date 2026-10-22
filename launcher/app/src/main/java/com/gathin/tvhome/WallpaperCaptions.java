@@ -39,9 +39,19 @@ final class WallpaperCaptions {
         File file = folder == null ? null : new File(folder, FILE_NAME);
         if (file == null || !file.isFile() || file.length() > 256 * 1024) return Collections.emptyMap();
         try {
-            return parse(Files.readAllLines(file.toPath(), StandardCharsets.UTF_8));
+            return parse(readLines(file));
         } catch (Exception e) {
             return Collections.emptyMap();
         }
+    }
+
+    private static java.util.List<String> readLines(File f) throws java.io.IOException {
+        java.util.List<String> lines = new java.util.ArrayList<>();
+        try (java.io.BufferedReader r = new java.io.BufferedReader(
+                new java.io.InputStreamReader(new java.io.FileInputStream(f), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = r.readLine()) != null) lines.add(line);
+        }
+        return lines;
     }
 }

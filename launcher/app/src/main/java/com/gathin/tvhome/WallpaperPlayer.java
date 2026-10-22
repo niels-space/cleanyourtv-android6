@@ -178,7 +178,7 @@ final class WallpaperPlayer {
         text.setFocusable(false);
         text.setAlpha(0f);
         try {
-            text.setTypeface(context.getResources().getFont(R.font.outfit_regular));
+            text.setTypeface(Compat.font(context, R.font.outfit_regular));
         } catch (Exception ignored) {
             // the system font is fine
         }
@@ -250,7 +250,7 @@ final class WallpaperPlayer {
             if (dimColor != 0) new Canvas(decoded).drawColor(dimColor);
             // One copy in GPU memory instead of a software bitmap plus its texture; the decode stays off the UI
             // thread for rotations, and Home's return no longer uploads 4-8 MB to the GPU.
-            Bitmap gpu = decoded.copy(Bitmap.Config.HARDWARE, false);
+            Bitmap gpu = (android.os.Build.VERSION.SDK_INT >= 26 ? decoded.copy(Bitmap.Config.HARDWARE, false) : null);
             if (gpu == null) return decoded;
             decoded.recycle();
             return gpu;
