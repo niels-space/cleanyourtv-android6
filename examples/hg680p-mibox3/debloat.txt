@@ -1,0 +1,5 @@
+com.android.camera2
+com.android.soundrecorder
+com.android.htmlviewer
+com.google.android.marvin.talkback
+com.google.android.syncadapters.contacts
